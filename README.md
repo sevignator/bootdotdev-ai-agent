@@ -1,3 +1,7 @@
+# Build an AI Agent project from Boot.dev
+
+This project involves creating a simple AI agent using the [Google Gemini API](https://ai.google.dev/api?_gl=1*7hx3r6*_up*MQ..*_ga*NjkzNDMyNzc2LjE3NDk2NDU4OTI.*_ga_P1DBVKWT6V*czE3NDk2NDU4OTIkbzEkZzAkdDE3NDk2NDU4OTIkajYwJGwwJGgyMjgwMjQ5MzM.&lang=python) in Python.
+
 ## Usage
 
 1. Create a virtual environment on your machine.
