@@ -1,3 +1,4 @@
+from typing import Callable
 from google.genai import types
 
 from functions.get_files_info import get_files_info, schema_get_files_info
@@ -16,20 +17,28 @@ available_functions = types.Tool(
 )
 
 
-def call_function(function_call_part, verbose=False):
-    if verbose:
+def call_function(function_call_part: types.FunctionCall, is_verbose=False):
+    if is_verbose:
         print(
             f" - Calling function: {function_call_part.name}({function_call_part.args})"
         )
     else:
         print(f" - Calling function: {function_call_part.name}")
-    function_map = {
+
+    function_map: dict[str, Callable] = {
         "get_files_info": get_files_info,
         "get_file_content": get_file_content,
         "run_python_file": run_python_file,
         "write_file": write_file,
     }
     function_name = function_call_part.name
+
+    if not function_name:
+        raise Exception("A function_name must be provided.")
+
+    if not function_call_part.args:
+        raise Exception("Arguments must be passed to the function.")
+
     if function_name not in function_map:
         return types.Content(
             role="tool",
@@ -40,9 +49,11 @@ def call_function(function_call_part, verbose=False):
                 )
             ],
         )
+
     args = dict(function_call_part.args)
     args["working_directory"] = WORKING_DIR
     function_result = function_map[function_name](**args)
+
     return types.Content(
         role="tool",
         parts=[

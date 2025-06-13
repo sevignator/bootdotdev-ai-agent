@@ -22,7 +22,6 @@ def main():
 
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
-
     user_prompt = " ".join(args)
 
     if is_verbose:
@@ -31,8 +30,8 @@ def main():
     messages = [
         types.Content(role="user", parts=[types.Part(text=user_prompt)]),
     ]
-
     iteration_count = 0
+
     while True:
         iteration_count += 1
         if iteration_count > MAX_ITERATION_COUNT:
@@ -71,15 +70,19 @@ def generate_content(client, messages, is_verbose):
         return response.text
 
     function_responses = []
+
     for function_call_part in response.function_calls:
         function_call_result = call_function(function_call_part, is_verbose)
+
         if (
             not function_call_result.parts
             or not function_call_result.parts[0].function_response
         ):
             raise Exception("Empty function call result.")
+
         if is_verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")
+
         function_responses.append(function_call_result.parts[0])
 
     if not function_responses:
