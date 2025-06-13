@@ -7,7 +7,7 @@ def write_file(working_directory: str, file_path: str, content: str):
     abs_file_path = os.path.abspath(os.path.join(abs_wd_path, file_path))
 
     if not abs_file_path.startswith(abs_wd_path):
-        return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
+        return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory.'
 
     # Create any additional sub-directory if it doesn't already exist
     if not os.path.exists(os.path.dirname(abs_file_path)):
@@ -17,7 +17,7 @@ def write_file(working_directory: str, file_path: str, content: str):
         f.write(content)
 
     return (
-        f'Successfully wrote to "{abs_file_path}" ({len(content)} characters written)'
+        f'Successfully wrote to "{abs_file_path}" ({len(content)} characters written).'
     )
 
 
